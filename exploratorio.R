@@ -18,8 +18,6 @@ t1 <- predio%>%
   summarise(conteo = n())
 
 
-k
-
 ggplot(data = predio)+
   geom_bar(aes(x = Zona, fill=Condicion_del_predio),position=position_dodge())+
   ylab('Conteo')+
@@ -120,6 +118,10 @@ predio%>%
             d_terr = quantile(AREA_TERRENO, c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)),
             d_aval = quantile(AVALUO, c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)))%>%
   as.data.frame()
+
+
+
+addadnadamda
 
 
 
