@@ -16,10 +16,25 @@ predioTenjo <- read_excel(path = "datos/Tenjo_R1_03_agosto_2021.xlsx",
 propietarioTenjo <- read_excel(path = "datos/Tenjo_R1_03_agosto_2021.xlsx",
                           sheet = "General")
 
+as.data.frame(table(predio$Numero_propietarios)) 
+as.data.frame(table(predio$DESTINO_ECONOMICO)) 
+
+as.data.frame(table(predioTenjo$Numero_propietarios)) 
+as.data.frame(table(predioTenjo$DESTINO_ECONOMICO))
+
+
+
+
 
 t0 <- predio%>%
   group_by(Zona, Condicion_del_predio)%>%
   filter(AREA_CONSTRUIDA<145)
+
+predio%>%
+  group_by(Zona)%>%
+  summarise(conteo = n(), totalArCon = sum(AREA_CONSTRUIDA),
+            totalArTer =sum(AREA_TERRENO), tot = sum(AVALUO))%>%
+  as.data.frame()
 
 predio%>%
   filter(Zona=="Rural")%>%
@@ -188,6 +203,14 @@ predio%>%
             totalArTer =sum(AREA_TERRENO), tot = sum(AVALUO))%>%
   as.data.frame()
 
+
+propietario%>%
+  group_by(Zona)%>%
+  summarise(conteo = n(), totalArCon = sum(AREA_CONSTRUIDA),
+            totalArTer =sum(AREA_TERRENO), tot = sum(AVALUO))%>%
+  as.data.frame()
+
+
 # Analisis de Tenjo
 predioTenjo%>%
   group_by(Zona)%>%
@@ -303,7 +326,7 @@ predioTenjo%>%
 predioTenjo%>%
   filter(Zona=="Rural")%>%
   group_by(Zona, Condicion_del_predio)%>%
-  summarise(mean(AVALUO),
+  summarise(mean(AVALUO) ,
             min(AVALUO),
             max(AVALUO),
             sum(AVALUO))%>%
@@ -368,7 +391,7 @@ predioTenjo%>%
   as.data.frame()
 
 
-predioTenjo%>%
+propietarioTenjo%>%
   group_by(Zona)%>%
   summarise(conteo = n(), totalArCon = sum(AREA_CONSTRUIDA),
             totalArTer =sum(AREA_TERRENO), tot = sum(AVALUO))%>%
