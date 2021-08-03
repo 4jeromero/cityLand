@@ -3,11 +3,11 @@ library(dplyr)
 library(ggplot2)
 
 
-predio <- read_excel(path = "datos/R1_Mpio_47001_Vigencia_2021_R1Generado_20210104_V2 (1).xlsx",
-                     sheet = "Predio")
+predio <- read_excel(path = "datos/Santamarta_R1_03_agosto_2021.xlsx",
+                     sheet = "Predios")
 summary(predio)
 
-propietario <- read_excel(path = "datos/R1_Mpio_47001_Vigencia_2021_R1Generado_20210104_V2 (1).xlsx",
+propietario <- read_excel(path = "datos/Santamarta_R1_03_agosto_2021.xlsx",
                           sheet = "General")
 
 predioTenjo <- read_excel(path = "datos/Tenjo_R1_03_agosto_2021.xlsx",
@@ -21,7 +21,6 @@ t0 <- predio%>%
   group_by(Zona, Condicion_del_predio)%>%
   filter(AREA_CONSTRUIDA<145)
 
-
 predio%>%
   filter(Zona=="Rural")%>%
   group_by(Zona, Condicion_del_predio)%>%
@@ -33,7 +32,6 @@ predio%>%
   group_by(Zona, Condicion_del_predio)%>%
   summarise(conteo = n())%>%
   as.data.frame()
-
 
 
 ggplot(data = predio)+
@@ -76,7 +74,7 @@ summary(predio)
 predio%>%
   filter(Zona=="Rural")%>%
   group_by(Zona, Condicion_del_predio)%>%
-  summarise(mediamean(AREA_CONSTRUIDA),
+  summarise(mean(AREA_CONSTRUIDA),
             min(AREA_CONSTRUIDA),
             max(AREA_CONSTRUIDA),
             sum(AREA_CONSTRUIDA))%>%
@@ -99,7 +97,8 @@ predio%>%
   summarise(mean(AREA_TERRENO),
             min(AREA_TERRENO),
             max(AREA_TERRENO),
-            sum(AREA_TERRENO))
+            sum(AREA_TERRENO))%>%
+  as.data.frame()
 
 predio%>%
   filter(Zona=="Urbano")%>%
@@ -107,7 +106,8 @@ predio%>%
   summarise(mean(AREA_TERRENO),
             min(AREA_TERRENO),
             max(AREA_TERRENO),
-            sum(AREA_TERRENO))
+            sum(AREA_TERRENO))%>%
+  as.data.frame()
 
 
 predio%>%
@@ -116,7 +116,8 @@ predio%>%
   summarise(mean(AVALUO),
             min(AVALUO),
             max(AVALUO),
-            sum(AVALUO))
+            sum(AVALUO))%>%
+  as.data.frame()
 
 predio%>%
   filter(Zona=="Urbano")%>%
@@ -124,12 +125,14 @@ predio%>%
   summarise(mean(AVALUO),
             min(AVALUO),
             max(AVALUO),
-            sum(AVALUO))
+            sum(AVALUO))%>%
+  as.data.frame()
 
 
 propietario%>%
   group_by(Zona, Condicion_del_predio)%>%
-  summarise(n())
+  summarise(n())%>%
+  as.data.frame()
 
 ggplot(data = propietario)+
   geom_bar(aes(x = Zona, fill=Condicion_del_predio),position=position_dodge())+
@@ -178,21 +181,6 @@ predio%>%
             d_terr = quantile(AREA_TERRENO, c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)),
             d_aval = quantile(AVALUO, c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)))%>%
   as.data.frame()
-
-
-
-
-predio%>%
-  filter(Zona=="Rural")%>%
-  group_by(Zona, Condicion_del_predio)%>%
-  mutate(freqRel = prop.table(sum(AVALUO)))%>%
-  summarise(mean(AVALUO), min(AVALUO), max(AVALUO), freqRel)
-
-
-predio%>%
-  filter(Zona=="Rural")%>%
-  group_by(Condicion_del_predio)%>%
-  select(AVALUO, AREA_CONSTRUIDA, AREA_TERRENO)
 
 predio%>%
   group_by(Zona)%>%
@@ -300,7 +288,8 @@ predioTenjo%>%
   summarise(mean(AREA_TERRENO),
             min(AREA_TERRENO),
             max(AREA_TERRENO),
-            sum(AREA_TERRENO))
+            sum(AREA_TERRENO))%>%
+  as.data.frame()
 
 predioTenjo%>%
   filter(Zona=="Urbano")%>%
@@ -308,7 +297,8 @@ predioTenjo%>%
   summarise(mean(AREA_TERRENO),
             min(AREA_TERRENO),
             max(AREA_TERRENO),
-            sum(AREA_TERRENO))
+            sum(AREA_TERRENO))%>%
+  as.data.frame()
 
 predioTenjo%>%
   filter(Zona=="Rural")%>%
@@ -316,7 +306,8 @@ predioTenjo%>%
   summarise(mean(AVALUO),
             min(AVALUO),
             max(AVALUO),
-            sum(AVALUO))
+            sum(AVALUO))%>%
+  as.data.frame()
 
 predioTenjo%>%
   filter(Zona=="Urbano")%>%
@@ -324,7 +315,8 @@ predioTenjo%>%
   summarise(mean(AVALUO),
             min(AVALUO),
             max(AVALUO),
-            sum(AVALUO))
+            sum(AVALUO))%>%
+  as.data.frame()
 
 
 ggplot(data = propietarioTenjo)+
@@ -375,20 +367,6 @@ predioTenjo%>%
             d_aval = quantile(AVALUO, c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)))%>%
   as.data.frame()
 
-
-
-
-predioTenjo%>%
-  filter(Zona=="Rural")%>%
-  group_by(Zona, Condicion_del_predio)%>%
-  mutate(freqRel = prop.table(sum(AVALUO)))%>%
-  summarise(mean(AVALUO), min(AVALUO), max(AVALUO), freqRel)
-
-
-predioTenjo%>%
-  filter(Zona=="Rural")%>%
-  group_by(Condicion_del_predio)%>%
-  select(AVALUO, AREA_CONSTRUIDA, AREA_TERRENO)
 
 predioTenjo%>%
   group_by(Zona)%>%
