@@ -17,6 +17,9 @@ t1 <- predio%>%
   group_by(Zona, Condicion_del_predio)%>%
   summarise(conteo = n())
 
+
+k
+
 ggplot(data = predio)+
   geom_bar(aes(x = Zona, fill=Condicion_del_predio),position=position_dodge())+
   ylab('Conteo')+
