@@ -10,6 +10,7 @@ summary(predio)
 propietario <- read_excel(path = "datos/Santamarta_R1_03_agosto_2021.xlsx",
                           sheet = "General")
 
+
 predioTenjo <- read_excel(path = "datos/Tenjo_R1_03_agosto_2021.xlsx",
                           sheet = "Predios")
 
