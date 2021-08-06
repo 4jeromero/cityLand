@@ -273,7 +273,6 @@ rec1 <- correos%>%
 rec1 <- correos%>%
   filter(carpeta!="elementos enviados" & is.na(contenido))
 
-
 rec2 <- left_join(recibidos, rec1)
 
 
