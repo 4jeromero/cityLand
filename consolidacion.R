@@ -8,7 +8,7 @@ library(tm)
 library(cluster)
 library(wordcloud)
 
-baseMaestra <- read_excel(path = "baseMaestra_050821.xlsx",
+baseMaestra <- read_excel(path = "datos/baseMaestra_050821.xlsx",
                           sheet = "baseMaestra")
 
 t1 <- baseMaestra%>%
@@ -18,9 +18,8 @@ t1 <- baseMaestra%>%
   arrange(desc(n))%>%
   as.data.frame()
 
-write.xlsx(t1, file = "clasificacion_050821.xlsx")
-    
-
+#write.xlsx(t1, file = "clasificacion_050821.xlsx")
+ 
 baseMaestra%>%
   filter(derechoPeticionC=="no" & ventaServicioC=="no" & tutelaC=="no")%>%
   summarise(n())

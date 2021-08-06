@@ -234,23 +234,21 @@ derechoPeticionDF <- recibidos%>%
   filter(derechoPeticionC=="si")
 
 # exportacion
-write.xlsx(tutelaDF, file = "Recibido_conT_050821.xlsx")
-write.xlsx(ventaDF, file = "Recibido_conV_050821.xlsx")
-write.xlsx(derechoPeticionDF, file = "Recibido_conD_050821.xlsx")
-write.xlsx(RsinTsinVsinD, file = "Recibido_sinT_sinV_sinD_050821.xlsx")
-write.xlsx(recibidos, file = "recibidos_050821.xlsx")
+#write.xlsx(tutelaDF, file = "Recibido_conT_050821.xlsx")
+#write.xlsx(ventaDF, file = "Recibido_conV_050821.xlsx")
+#write.xlsx(derechoPeticionDF, file = "Recibido_conD_050821.xlsx")
+#write.xlsx(RsinTsinVsinD, file = "Recibido_sinT_sinV_sinD_050821.xlsx")
+#write.xlsx(recibidos, file = "recibidos_050821.xlsx")
 
 #########################################
-t1 <- RsinTsinVsinD%>%
+t1 <- recibidos%>%
   group_by(ventaServicioC, derechoPeticionC, tutelaC, tipoPersona, mutacion,
            rectificacionC, adj, id_predioC)%>%
   summarise(n= n())%>%
   arrange(desc(n))%>%
   as.data.frame()
 
-write.xlsx(t1, file = "clasificacion_050821.xlsx")
-
-
+#write.xlsx(t1, file = "clasificacion_050821.xlsx")
 
 recibidos%>%
   filter(tutelaC=="no")%>%
@@ -266,6 +264,16 @@ recibidos%>%
 
 #########################################
 
+rec1 <- correos%>%
+  filter(carpeta!="elementos enviados" & is.na(contenido))
 
+#write.xlsx(rec1, "na_contenido.xlsx")
+
+
+rec1 <- correos%>%
+  filter(carpeta!="elementos enviados" & is.na(contenido))
+
+
+rec2 <- left_join(recibidos, rec1)
 
 
